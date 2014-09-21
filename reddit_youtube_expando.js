@@ -6,7 +6,8 @@
 // @include        https://*.reddit.com/*
 // @match          http://*.reddit.com/*
 // @match          https://*.reddit.com/*
-// @version        1.2
+// @version        1.3
+// @grant          none
 // ==/UserScript==
 
 // This work is licensed under the Creative Commons Attribution 2.0 Generic License.
@@ -14,7 +15,7 @@
 
 // This version of the regex can scrub some technicaly invalid links into valid ones, but I'm not sure
 // the list of video ID characters is correct.
-var youtubeLinkRegex = new RegExp("(?:^https?://(?:www\\.)?youtube\\.com/watch\\?(?:.*&)*v=([a-zA-Z0-9\\-_]+)(?:#t=(.*$))?)|(?:^http://youtu.be/([a-zA-Z0-9\\-_]+))")
+var youtubeLinkRegex = new RegExp("(?:^https?://(?:www\\.)?youtube\\.com/watch\\?(?:.*&)*v=([a-zA-Z0-9\\-_]+)[^#]*(?:#t=(.*$))?)|(?:^http://youtu.be/([a-zA-Z0-9\\-_]+))")
 
 /*
  // Flash Embed
@@ -58,11 +59,17 @@ function addYouTubeEmbed(videoID, startTime) {
     embedObject.setAttribute("type",   "text/html")
     embedObject.setAttribute("width",  "450")
     embedObject.setAttribute("height", "366")
+    embedObject.setAttribute("allowfullscreen", "allowfullscreen")
+    embedObject.setAttribute("mozallowfullscreen", "mozallowfullscreen")
+    embedObject.setAttribute("webkitallowfullscreen", "webkitallowfullscreen")
+
+    linkProto = ('https:' == document.location.protocol ? 'https:' : 'http:')
+
     if (startTime) {
-        embedObject.setAttribute("src",    "http://www.youtube.com/embed/" + videoID + "#t=" + startTime)
+        embedObject.setAttribute("src", linkProto + "//www.youtube.com/embed/" + videoID + "#t=" + startTime)
     }
     else {
-        embedObject.setAttribute("src",    "http://www.youtube.com/embed/" + videoID)
+        embedObject.setAttribute("src", linkProto + "//www.youtube.com/embed/" + videoID)
     }
     embedObject.setAttribute("frameborder", "0")
     embedDiv.appendChild(embedObject)
