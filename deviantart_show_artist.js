@@ -5,10 +5,12 @@
 // @include     http://www.deviantart.com/
 // @include     http://www.deviantart.com/?*
 // @include     http://browse.deviantart.com/*
+// @include     http://www.deviantart.com/browse/*
 // @include     https://www.deviantart.com/
 // @include     https://www.deviantart.com/?*
 // @include     https://browse.deviantart.com/*
-// @version     1.0
+// @include     https://www.deviantart.com/browse/*
+// @version     1.1
 // @grant       GM_Log
 // ==/UserScript==
 
